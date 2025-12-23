@@ -2,7 +2,11 @@ import React from 'react';
 import { ORIGINAL_PRICE } from '../../constants';
 import { Button } from '../ui/Button';
 
-export const FinalCTA: React.FC = () => {
+interface FinalCTAProps {
+  onCtaClick?: () => void;
+}
+
+export const FinalCTA: React.FC<FinalCTAProps> = ({ onCtaClick }) => {
   return (
     <section className="bg-[#f9fafb] py-16 md:py-20 flex justify-center border-t border-gray-100">
       <div className="max-w-[700px] w-full px-8 flex flex-col items-center text-center">
@@ -42,9 +46,9 @@ export const FinalCTA: React.FC = () => {
           O que você decide AGORA pode mudar tudo.
         </p>
 
-        {/* Usando o componente Button para garantir rastreamento n8n/Pixel */}
-        <Button size="lg" className="w-full md:w-auto animate-pulse">
-          🧬 Sim, Quero Meu Relatório Agora
+        {/* Usando o componente Button para abrir o modal */}
+        <Button size="lg" className="w-full md:w-auto animate-pulse" onClick={onCtaClick}>
+          🧬 Sim, Quero Gerar Meu Relatório
         </Button>
 
         <p className="text-sm text-gray-500 mt-3 font-medium text-center">

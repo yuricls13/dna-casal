@@ -4,7 +4,11 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Section } from '../ui/Section';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onCtaClick?: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
   return (
     <Section className="pt-12 pb-16 md:pt-20 md:pb-20 overflow-hidden relative" enableAnimation={false}>
       <div className="flex flex-col items-center text-center relative z-10">
@@ -42,12 +46,12 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col items-center w-full"
         >
-          <Button className="w-full md:w-auto">
+          <Button className="w-full md:w-auto" onClick={onCtaClick}>
             🧬 Analisar Meu Relacionamento Agora
           </Button>
 
           <p className="text-sm text-gray-500 mt-3 mb-6 font-medium text-center">
-            👇 Leva 2 minutos para começar
+            👇 Faça o upload da conversa para começar
           </p>
           
           <div className="flex items-center gap-4 text-sm text-gray-500 font-medium">

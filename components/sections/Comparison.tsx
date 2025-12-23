@@ -5,6 +5,10 @@ import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
 import { ORIGINAL_PRICE } from '../../constants';
 
+interface ComparisonProps {
+  onCtaClick?: () => void;
+}
+
 interface Option {
   title: string;
   icon: string;
@@ -86,7 +90,7 @@ const MobileCompetitorCard = ({ opt }: { opt: Option }) => {
   );
 };
 
-export const Comparison: React.FC = () => {
+export const Comparison: React.FC<ComparisonProps> = ({ onCtaClick }) => {
   const options: Option[] = [
     {
       title: "DNA DO CASAL",
@@ -203,7 +207,7 @@ export const Comparison: React.FC = () => {
                       
                       {/* BOTÃO CTA DESKTOP */}
                       <div className="mt-2 w-full">
-                        <Button fullWidth className="text-sm py-2 shadow-sm" variant="primary">
+                        <Button fullWidth className="text-sm py-2 shadow-sm" variant="primary" onClick={onCtaClick}>
                           QUERO AGORA
                         </Button>
                       </div>
@@ -270,7 +274,7 @@ export const Comparison: React.FC = () => {
               
               {/* BOTÃO CTA MOBILE */}
               <div className="mb-6 w-full">
-                <Button fullWidth className="shadow-lg text-lg animate-pulse" variant="primary">
+                <Button fullWidth className="shadow-lg text-lg animate-pulse" variant="primary" onClick={onCtaClick}>
                   QUERO MEU RELATÓRIO
                 </Button>
               </div>

@@ -4,7 +4,11 @@ import { motion } from 'framer-motion';
 import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
 
-export const HowItWorks: React.FC = () => {
+interface HowItWorksProps {
+  onCtaClick?: () => void;
+}
+
+export const HowItWorks: React.FC<HowItWorksProps> = ({ onCtaClick }) => {
   const steps = [
     {
       icon: Smartphone,
@@ -14,12 +18,12 @@ export const HowItWorks: React.FC = () => {
     {
       icon: Brain,
       title: "Análise com IA",
-      desc: "Nosso sistema aplica testes de personalidade (DISC, MBTI) nos dados."
+      desc: "Envie o arquivo. Nosso sistema processa e aplica testes de personalidade."
     },
     {
       icon: FileText,
-      title: "Receba o relatório",
-      desc: "Em até 10 minutos, receba 10+ páginas com o mapa do seu relacionamento."
+      title: "Libere o relatório",
+      desc: "Após a análise, pague para liberar o acesso ao dossiê completo de 10+ páginas."
     }
   ];
 
@@ -72,7 +76,7 @@ export const HowItWorks: React.FC = () => {
       </div>
 
       <div className="text-center">
-        <Button>Quero Meu Relatório Agora</Button>
+        <Button onClick={onCtaClick}>Quero Começar Agora</Button>
         <p className="text-sm text-gray-500 mt-3 font-medium text-center">
           👇 Leva 2 minutos para começar
         </p>

@@ -6,40 +6,21 @@
     <title>DNA do Casal | Decodifique seu relacionamento</title>
     <meta name="description" content="Descubra em 10 minutos os padrões escondidos que fazem vocês brigarem sempre pelas mesmas coisas.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind Play CDN (Garante o estilo mesmo se o build de PostCSS falhar no Vercel) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-              brand: {
-                purple: '#6366f1',
-                pink: '#ec4899',
-                dark: '#1a1a1a',
-                light: '#f9fafb',
-              }
-            }
-          }
-        }
-      }
-    </script>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Google Analytics (Configurável via GTM ou Hardcoded) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-PLACEHOLDER');
     </script>
 
     <!-- Meta Pixel Code -->
@@ -55,19 +36,20 @@
       fbq('init', '860574049909081');
       fbq('track', 'PageView');
     </script>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
     "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-white antialiased">
     <noscript>
@@ -76,7 +58,7 @@
 
     <div id="root"></div>
     
-    <!-- No Vercel/Vite, o caminho deve ser relativo ao root -->
+    <!-- O Vite injetará o script corretamente no build -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

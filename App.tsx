@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Hero } from './components/sections/Hero';
 import { StatsBar } from './components/sections/StatsBar';
 import { Problems } from './components/sections/Problems';
@@ -14,8 +14,15 @@ import { WhatItIsNot } from './components/sections/WhatItIsNot';
 import { FAQ } from './components/sections/FAQ';
 import { FinalCTA } from './components/sections/FinalCTA';
 import { Footer } from './components/sections/Footer';
+import { UploadModal } from './components/ui/UploadModal';
+import { CookieConsent } from './components/ui/CookieConsent';
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   useEffect(() => {
     const handleSmoothScroll = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -37,21 +44,26 @@ function App() {
 
   return (
     <main className="min-h-screen font-sans text-gray-900 bg-white selection:bg-brand-pink selection:text-white">
-      <Hero />
+      {/* Passando a função openModal para as seções que têm botões CTA */}
+      <Hero onCtaClick={openModal} />
       <StatsBar />
       <Problems />
       <TargetAudience />
-      <HowItWorks />
-      <Benefits />
+      <HowItWorks onCtaClick={openModal} />
+      <Benefits onCtaClick={openModal} />
       <SocialProof />
       <Testimonials />
-      <Comparison />
+      <Comparison onCtaClick={openModal} />
       <Privacy />
       <Guarantee />
       <WhatItIsNot />
       <FAQ />
-      <FinalCTA />
+      <FinalCTA onCtaClick={openModal} />
       <Footer />
+
+      {/* Componentes Globais / Sobrepostos */}
+      <CookieConsent />
+      <UploadModal isOpen={isModalOpen} onClose={closeModal} />
     </main>
   );
 }

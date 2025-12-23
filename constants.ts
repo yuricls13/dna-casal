@@ -13,14 +13,26 @@ import {
 
 /**
  * DNA DO CASAL - CONFIGURAÇÕES GERAIS
+ * 
+ * As variáveis abaixo tentam ler do arquivo .env (Variáveis de Ambiente)
+ * Se não encontrarem, usam o valor padrão (fallback).
+ * 
+ * Para configurar na Vercel:
+ * Settings > Environment Variables > Add New
+ * Chave: VITE_CHECKOUT_URL | Valor: Seu Link Stripe
  */
 
-// ⚠️ CHECKOUT: Troque pelo seu link da Hotmart, Kiwify, Eduzz, etc.
-export const CHECKOUT_URL = "https://pay.hotmart.com/PLACEHOLDER_LINK"; 
+// Helper para acessar variáveis de ambiente de forma segura
+const getEnv = (key: string, defaultValue: string) => {
+  // @ts-ignore
+  return (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) ? import.meta.env[key] : defaultValue;
+};
 
-// ⚠️ WEBHOOK N8N: Link fornecido pelo usuário.
-// DICA: Para produção, ative o workflow no n8n e troque 'webhook-test' por 'webhook'
-export const N8N_WEBHOOK_URL: string = "https://automacao.agenciadedicada.com.br/webhook-test/db8752de-56d7-4cf3-a5a0-c52242fac27d"; 
+// Link do Checkout (Stripe/Hotmart/Kiwify)
+export const CHECKOUT_URL = getEnv('VITE_CHECKOUT_URL', "https://buy.stripe.com/SEU_LINK_AQUI");
+
+// Webhook do n8n para receber o arquivo
+export const N8N_UPLOAD_WEBHOOK_URL: string = getEnv('VITE_N8N_WEBHOOK_URL', "https://automacao.agenciadedicada.com.br/webhook-test/upload-analise-dna");
 
 export const PRODUCT_PRICE = "R$ 29,97";
 export const ORIGINAL_PRICE = "R$ 97,00";
@@ -107,8 +119,8 @@ export const FAQS = [
     answer: "Garantia incondicional de 7 dias. Se não ficar satisfeito, devolvemos 100% do valor."
   },
   {
-    question: "Como eu envio a conversa depois que pagar?",
-    answer: "Assim que o pagamento for confirmado, você recebe um e-mail com o link exclusivo. É só clicar, fazer upload do arquivo .txt da conversa do WhatsApp e pronto! Em 10 minutos você recebe o relatório."
+    question: "Como eu envio a conversa?",
+    answer: "É muito simples! Basta seguir o passo a passo no nosso sistema seguro. Você exporta do WhatsApp e envia o arquivo aqui mesmo no site antes do pagamento."
   },
   {
     question: "Vocês vão compartilhar minha conversa com alguém?",
@@ -123,7 +135,7 @@ export const FAQS = [
     answer: "Sim! Muitas pessoas fazem a análise para entender o que deu errado e evitar os mesmos padrões no próximo relacionamento. É uma forma poderosa de autoconhecimento."
   },
   {
-    question: "Precisa ser em português?",
-    answer: "Sim, no momento analisamos apenas conversas em português (Brasil). Estamos trabalhando para adicionar outros idiomas em breve."
+    question: "Quanto tempo demora?",
+    answer: "O sistema processa em cerca de 2 a 5 minutos. Após o pagamento, o relatório é liberado e enviado imediatamente para o seu e-mail e WhatsApp."
   }
 ];

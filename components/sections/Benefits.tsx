@@ -4,7 +4,11 @@ import { Section } from '../ui/Section';
 import { Button } from '../ui/Button';
 import { BENEFITS } from '../../constants';
 
-export const Benefits: React.FC = () => {
+interface BenefitsProps {
+  onCtaClick?: () => void;
+}
+
+export const Benefits: React.FC<BenefitsProps> = ({ onCtaClick }) => {
   return (
     <Section background="light">
       <div className="text-center mb-16">
@@ -33,7 +37,7 @@ export const Benefits: React.FC = () => {
       </div>
 
       <div className="mt-12 text-center">
-        <Button>Quero Descobrir Meus Padrões</Button>
+        <Button onClick={onCtaClick}>Quero Descobrir Meus Padrões</Button>
         <p className="text-sm text-gray-500 mt-3 font-medium text-center">
           👇 Leva 2 minutos para começar
         </p>
