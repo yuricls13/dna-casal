@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Upload, FileText, Check, Lock, Loader2, Smartphone, ShieldCheck, Brain } from 'lucide-react';
 import { Button } from './Button';
-import { CHECKOUT_URL, N8N_UPLOAD_WEBHOOK_URL } from '../../constants';
+import { CHECKOUT_URL, N8N_UPLOAD_WEBHOOK_URL, PRODUCT_PRICE_NUMBER } from '../../constants';
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -69,11 +69,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
     }, 200);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Handler do Passo 1: Dados Pessoais -> Torna-se um LEAD
+  const handleLeadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStep(2);
+  };
+
+  // Handler do Passo 2: Upload -> Personalização do Produto
+  const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return;
 
-    // Enviar dados para n8n (sem travar a UI, "fire and forget" ou aguardar validação básica)
+    // Enviar dados para n8n
     const data = new FormData();
     data.append('file', file);
     data.append('name', formData.name);
@@ -82,7 +89,6 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
     data.append('source', window.location.hostname);
 
     try {
-      // Dispara o upload para o n8n
       if (N8N_UPLOAD_WEBHOOK_URL && !N8N_UPLOAD_WEBHOOK_URL.includes("PLACEHOLDER")) {
         fetch(N8N_UPLOAD_WEBHOOK_URL, {
           method: 'POST',
@@ -90,19 +96,15 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
         }).catch(err => console.error("Erro upload n8n:", err));
       }
       
-      // Inicia a simulação visual imediatamente para o usuário não esperar
       simulateProcessing();
     } catch (error) {
       console.error(error);
-      simulateProcessing(); // Fallback
+      simulateProcessing();
     }
   };
 
+  // Handler do Passo 4: Pagamento -> Início do Checkout
   const handlePaymentClick = () => {
-    // Rastreamento
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'InitiateCheckout');
-    }
     window.open(CHECKOUT_URL, '_blank');
   };
 
@@ -142,7 +144,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
           
           {/* STEP 1: Dados Pessoais */}
           {step === 1 && (
-            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
+            <form onSubmit={handleLeadSubmit}>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Quem vai receber o relatório?</h3>
               <p className="text-gray-500 mb-6 text-sm">Insira seus dados para onde devemos enviar a análise completa.</p>
               
@@ -233,7 +235,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
 
               <div className="mt-8">
                 <Button 
-                  onClick={handleSubmit} 
+                  onClick={handleUploadSubmit} 
                   fullWidth 
                   disabled={!file}
                 >
@@ -309,7 +311,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose }) => 
               </Button>
               
               <p className="text-xs text-gray-500 mt-4">
-                Pagamento único de {CHECKOUT_URL ? "R$ 29,97" : "valor promocional"}. Acesso imediato via E-mail e WhatsApp.
+                Pagamento único de {CHECKOUT_URL ? `R$ ${PRODUCT_PRICE_NUMBER.toString().replace('.', ',')}` : "valor promocional"}. Acesso imediato via E-mail e WhatsApp.
               </p>
             </div>
           )}

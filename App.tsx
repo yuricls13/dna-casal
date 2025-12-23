@@ -20,7 +20,10 @@ import { CookieConsent } from './components/ui/CookieConsent';
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {

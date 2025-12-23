@@ -34,7 +34,9 @@ export const CHECKOUT_URL = getEnv('VITE_CHECKOUT_URL', "https://buy.stripe.com/
 // Webhook do n8n para receber o arquivo
 export const N8N_UPLOAD_WEBHOOK_URL: string = getEnv('VITE_N8N_WEBHOOK_URL', "https://automacao.agenciadedicada.com.br/webhook-test/upload-analise-dna");
 
-export const PRODUCT_PRICE = "R$ 29,97";
+// Preços
+export const PRODUCT_PRICE_NUMBER = 29.97; // Valor numérico para o Pixel
+export const PRODUCT_PRICE = `R$ ${PRODUCT_PRICE_NUMBER.toString().replace('.', ',')}`; // Valor formatado para exibição
 export const ORIGINAL_PRICE = "R$ 97,00";
 
 export const PAIN_POINTS = [
